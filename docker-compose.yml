@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  # The Identity Provider (From Project 1)
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    command: start-dev
+    ports:
+      - "8080:8080"
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+    networks:
+      - nexus-network
+
+  # The Message Broker (For Project 2)
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - nexus-network
+
+networks:
+  nexus-network:
+    driver: bridge
